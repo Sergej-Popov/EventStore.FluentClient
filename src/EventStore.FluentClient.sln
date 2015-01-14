@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{84BBCF04-6E9C-432C-A7AF-B820F6932800}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStore.FluentClient", "EventStore.FluentClient\EventStore.FluentClient.csproj", "{9D46E50F-2B82-480A-8D60-002E07FD1ABD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStore.FluentClient.Tests", "EventStore.FluentClient.Tests\EventStore.FluentClient.Tests.csproj", "{E774836F-24BD-4FA8-8B28-145C07F4E91E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9D46E50F-2B82-480A-8D60-002E07FD1ABD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D46E50F-2B82-480A-8D60-002E07FD1ABD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D46E50F-2B82-480A-8D60-002E07FD1ABD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D46E50F-2B82-480A-8D60-002E07FD1ABD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E774836F-24BD-4FA8-8B28-145C07F4E91E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E774836F-24BD-4FA8-8B28-145C07F4E91E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E774836F-24BD-4FA8-8B28-145C07F4E91E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E774836F-24BD-4FA8-8B28-145C07F4E91E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

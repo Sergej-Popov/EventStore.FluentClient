@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"> 
+    <metadata>
+        <id>Ingenie.EventStore.Client</id>
+        <version>1.0</version>
+        <authors>Ingenie</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>EventStore Api Facade/Client for simplifying usage</description>
+    </metadata>  
+</package>
