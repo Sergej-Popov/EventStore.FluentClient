@@ -112,9 +112,9 @@ namespace EventStore.FluentClient
             if (_onDropped != null)
                 Task.Run(() => _onDropped(subscription, reason, exception));
 
-            if (!_keepConnection || (_retryCount <= 0 && _retryCount != -1)) return;
+            if (!_keepConnection || _retryCount < -1) return;
 
-            if (++_retried > _retryCount) return;
+            if (++_retried > _retryCount && _retryCount != -1) return;
 
             WaitBeforeNextRetry();
             Restart();
