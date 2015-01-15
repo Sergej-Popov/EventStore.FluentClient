@@ -34,7 +34,7 @@ namespace EventStore.FluentClient.Tests
         public async Task RetrieveResulsts_WhenRun()
         {
             await GenerateSampleStringEvents();
-            var result = await Query.WithSettings(ConfigurationSettings.FromConfig("Full")).WithFile("SampleProjection.js").Run();
+            var result = await Query.WithSettings(ConfigurationSettings.FromConfig("Full")).WithFile("Projections\\SampleProjection.js").Run();
             var jResult = JObject.Parse(result);
             Assert.AreEqual(100, (int)jResult["count"]);
         }
@@ -54,7 +54,7 @@ namespace EventStore.FluentClient.Tests
                 });
 
             }
-            var result = await Query.WithSettings(ConfigurationSettings.FromConfig("Full")).WithFile("SampleProjectionWithDatePlaceHolder.js").Run(DateTime.Now.AddDays(-1).ToString("u"));
+            var result = await Query.WithSettings(ConfigurationSettings.FromConfig("Full")).WithFile("Projections\\SampleProjectionWithDatePlaceHolder.js").Run(DateTime.Now.AddDays(-1).ToString("u"));
             var jResult = JObject.Parse(result);
             Assert.AreEqual(50, (int)jResult["count"]);
         }
@@ -66,7 +66,7 @@ namespace EventStore.FluentClient.Tests
         [ExpectedException(typeof(ApplicationException))]
         public async Task RetrieveResulsts_WhenRun2()
         {
-            await Query.WithSettings(ConfigurationSettings.FromConfig("Full")).WithFile("SampleInvalidProjection.js").Run();
+            await Query.WithSettings(ConfigurationSettings.FromConfig("Full")).WithFile("Projections\\SampleInvalidProjection.js").Run();
         }
 
 

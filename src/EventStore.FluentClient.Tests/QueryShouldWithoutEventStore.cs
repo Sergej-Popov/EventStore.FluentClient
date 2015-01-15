@@ -14,7 +14,7 @@ namespace EventStore.FluentClient.Tests
         public async Task Throw_WhenCreateAttemptedWithoutSettings()
         {
             await Query.WithSettings(null)
-                .WithFile("SampleProjection.js")
+                .WithFile("Projections\\SampleProjection.js")
                 .Run();
 
         }

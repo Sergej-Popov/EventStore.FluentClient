@@ -25,11 +25,14 @@ namespace EventStore.FluentClient
         private int _retried;
         private IPersistCheckpoint _persister;
         private bool _connected;
+        private bool _stopped;
 
         private Subscription(ConfigurationSettings settings)
         {
             _settings = settings;
             _batchSize = 50;
+            _stopped = true;
+            _connected = false;
             _checkpoint = StreamCheckpoint.StreamStart;
         }
 
@@ -108,6 +111,7 @@ namespace EventStore.FluentClient
 
         private void OnDroppedHandle(EventStoreCatchUpSubscription subscription, SubscriptionDropReason reason, Exception exception)
         {
+            if (_stopped) return;
             _connected = false;
             if (_onDropped != null)
                 Task.Run(() => _onDropped(subscription, reason, exception));
@@ -158,6 +162,7 @@ namespace EventStore.FluentClient
                 .FailOnNoServerResponse()
                 .SetDefaultUserCredentials(_settings.Credentials);
 
+            _stopped = false;
             _connection = EventStoreConnection.Create(_connectionSettings, _settings.TcpEndpoint);
             _connection.ConnectAsync().Wait();
 
@@ -175,6 +180,7 @@ namespace EventStore.FluentClient
         private void Restart()
         {
             Stop();
+            _stopped = false;
             _connection = EventStoreConnection.Create(_connectionSettings, _settings.TcpEndpoint);
             _connection.ConnectAsync().Wait();
             Subscribe();
@@ -183,7 +189,9 @@ namespace EventStore.FluentClient
 
         public Subscription<T> Stop()
         {
+            _stopped = true;
             _subscription.Stop();
+            _connection.Close();
             _connection.Dispose();
 
             return this;

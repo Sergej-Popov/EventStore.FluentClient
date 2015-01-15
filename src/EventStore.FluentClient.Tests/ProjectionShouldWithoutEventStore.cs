@@ -14,7 +14,7 @@ namespace EventStore.FluentClient.Tests
         public async Task Throw_WhenCreateAttemptedWithoutSettings()
         {
             await Projection.WithSettings(null)
-                .WithFile("SampleProjection.js")
+                .WithFile("Projections\\SampleProjection.js")
                 .Contnuous()
                 .WithName("SampleProjection")
                 .Create();
@@ -26,7 +26,7 @@ namespace EventStore.FluentClient.Tests
         public async Task Throw_WhenCreateAttemptedWithoutName()
         {
             await Projection.WithSettings(ConfigurationSettings.FromConfig("Full"))
-                .WithFile("SampleProjection.js")
+                .WithFile("Projections\\SampleProjection.js")
                 .Contnuous()
                 .Create();
         }
@@ -36,7 +36,7 @@ namespace EventStore.FluentClient.Tests
         public async Task Throw_WhenCreateAttemptedWithoutType()
         {
             await Projection.WithSettings(ConfigurationSettings.FromConfig("Full"))
-                .WithFile("SampleProjection.js")
+                .WithFile("Projections\\SampleProjection.js")
                 .WithName("SampleProjection")
                 .Create();
         }

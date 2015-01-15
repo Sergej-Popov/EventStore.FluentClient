@@ -91,7 +91,7 @@ namespace EventStore.FluentClient.Tests
 
             await Projection.WithSettings(settings)
                       .WithName(projectionName)
-                      .WithFile("SampleProjection.js")
+                      .WithFile("Projections\\SampleProjection.js")
                       .Contnuous()
                       .EmitEnabled()
                       .Enabled()
