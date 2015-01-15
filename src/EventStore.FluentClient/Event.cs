@@ -6,8 +6,8 @@ namespace EventStore.FluentClient
     {
         public T Data { get; set; }
         public List<KeyValuePair<string, string>> Meta { get; set; }
-        public int Position { get; set; }
-        public int OriginalPosition { get; set; }
+        public int PositionInTargetStream { get; set; }
+        public int PositionInSourceStream { get; set; }
         public bool IsResolved { get; set; }
 
     }

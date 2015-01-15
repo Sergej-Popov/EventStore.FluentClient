@@ -132,12 +132,13 @@ namespace EventStore.FluentClient
             Connected();
             
             _retried = 0;
-            _persister.Persist(@event.Event.EventNumber);
                     
             Event<T> deserialized;
-            if (Util.TryDeserialize(@event, out deserialized, Defaults.JsonSerializerSettings))
-                _onEvent(deserialized);
-            
+
+            if (!Util.TryDeserialize(@event, out deserialized, Defaults.JsonSerializerSettings)) return;
+
+            _persister.Persist(deserialized.PositionInTargetStream);
+            _onEvent(deserialized);
         }
         private void Connected()
         {

@@ -40,8 +40,8 @@ namespace EventStore.FluentClient
                     
                     Data = data,
                     Meta = meta,
-                    Position = @event.Event.EventNumber,
-                    OriginalPosition = @event.OriginalEventNumber,
+                    PositionInSourceStream = @event.Event.EventNumber,
+                    PositionInTargetStream = @event.OriginalEventNumber,
                     IsResolved = @event.IsResolved
                 };
                 return true;

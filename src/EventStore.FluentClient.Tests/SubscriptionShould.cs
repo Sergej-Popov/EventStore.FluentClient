@@ -72,7 +72,7 @@ namespace EventStore.FluentClient.Tests
                                                    })
                                                    .OnEvent(@event =>
                                                    {
-                                                       Trace.WriteLine(DateTime.Now.ToString("T") + " OnEvent. Num: " + @event.Position);
+                                                       Trace.WriteLine(DateTime.Now.ToString("T") + " OnEvent. Num: " + @event.PositionInTargetStream);
                                                        notifications.Add(@event);
                                                    })
                                                    .OnLiveProcessingStarted(upSubscription => Trace.WriteLine(DateTime.Now.ToString("T") + " Live processing started"))
@@ -182,7 +182,7 @@ namespace EventStore.FluentClient.Tests
                                                    })
                                                    .OnEvent(@event =>
                                                    {
-                                                       Trace.WriteLine(DateTime.Now.ToString("T") + " OnEvent. Num: " + @event.Position);
+                                                       Trace.WriteLine(DateTime.Now.ToString("T") + " OnEvent. Num: " + @event.PositionInTargetStream);
                                                        notifications.Add(@event);
                                                    })
                                                    .OnLiveProcessingStarted(upSubscription => Trace.WriteLine(DateTime.Now.ToString("T") + " Live processing started"))
