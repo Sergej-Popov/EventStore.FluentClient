@@ -1,9 +1,0 @@
-I:\EventStore.FluentClient\src\EventStore.FluentClient\bin\Debug\EventStore.FluentClient.dll
-I:\EventStore.FluentClient\src\EventStore.FluentClient\bin\Debug\EventStore.FluentClient.pdb
-I:\EventStore.FluentClient\src\EventStore.FluentClient\bin\Debug\EventStore.ClientAPI.dll
-I:\EventStore.FluentClient\src\EventStore.FluentClient\bin\Debug\Newtonsoft.Json.dll
-I:\EventStore.FluentClient\src\EventStore.FluentClient\bin\Debug\EventStore.ClientAPI.xml
-I:\EventStore.FluentClient\src\EventStore.FluentClient\bin\Debug\Newtonsoft.Json.xml
-I:\EventStore.FluentClient\src\EventStore.FluentClient\obj\Debug\EventStore.FluentClient.csprojResolveAssemblyReference.cache
-I:\EventStore.FluentClient\src\EventStore.FluentClient\obj\Debug\EventStore.FluentClient.dll
-I:\EventStore.FluentClient\src\EventStore.FluentClient\obj\Debug\EventStore.FluentClient.pdb
