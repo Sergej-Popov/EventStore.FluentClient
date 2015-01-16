@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using EventStore.FluentClient.Tests.Utils;
 using Newtonsoft.Json.Linq;
@@ -45,16 +44,16 @@ namespace EventStore.FluentClient.Tests
         [Category("Integration")]
         public async Task RetrieveResulstsCorrectly_WhenRunningProjectionWithPlaceholders()
         {
+
             using (var stream = await EventStream.Create(ConfigurationSettings.FromConfig("Full"), "QueryTestStreamForPlaceholderProjection"))
             {
-
-                Enumerable.Range(1, 100).ToList().ForEach(async i =>
+                for (var i = 1; i <= 100; i++)
                 {
                     await stream.EmitEventAsync(i > 50 ? DateTime.Now : DateTime.Now.AddDays(-5));
-                });
-
+                }
             }
             var result = await Query.WithSettings(ConfigurationSettings.FromConfig("Full")).WithFile("Projections\\SampleProjectionWithDatePlaceHolder.js").Run(DateTime.Now.AddDays(-1).ToString("u"));
+
             var jResult = JObject.Parse(result);
             Assert.AreEqual(50, (int)jResult["count"]);
         }

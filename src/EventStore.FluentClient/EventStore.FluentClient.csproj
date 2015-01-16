@@ -57,7 +57,6 @@
     <Compile Include="ConfigurationSettings.cs" />
     <Compile Include="Defaults.cs" />
     <Compile Include="Event.cs" />
-    <Compile Include="EventContainer.cs" />
     <Compile Include="IEventStream.cs" />
     <Compile Include="CheckpointPersisters\IPersistCheckpoint.cs" />
     <Compile Include="Projection.cs" />

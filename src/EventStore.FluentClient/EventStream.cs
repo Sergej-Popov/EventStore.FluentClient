@@ -53,26 +53,21 @@ namespace EventStore.FluentClient
 
 
 
-        public async Task EmitEventAsync<T>(T @event, int expectedVersion = ExpectedVersion.Any, List<KeyValuePair<string, string>> meta = null)
+        public async Task EmitEventAsync<T>(T @event, int expectedVersion = ExpectedVersion.Any, object meta = null)
         {
-            // ReSharper disable once PossibleNullReferenceException
-            var splits = @event.GetType().AssemblyQualifiedName.Split(',');
-            var clrType = string.Format("{0}, {1}", splits[0].Trim(), splits[1].Trim());
-            
-            var container = new EventContainer<T>
+
+            var dataJson = JsonConvert.SerializeObject(@event, JsonSerializerSettings);
+            var dataBytes = Encoding.UTF8.GetBytes(dataJson);
+            byte[] metaBytes = null;
+            if (meta != null)
             {
-                ClrType = clrType,
-                Data = @event,
-                Meta = meta
-            };
-
-
-            var json = JsonConvert.SerializeObject(container, JsonSerializerSettings);
-            var bytes = Encoding.UTF8.GetBytes(json);
+                var metaJson = JsonConvert.SerializeObject(meta, JsonSerializerSettings);
+                metaBytes = Encoding.UTF8.GetBytes(metaJson);
+            }
 
             await _connection.AppendToStreamAsync(_streamId, expectedVersion, new List<EventData>
             {
-                new EventData(Guid.NewGuid(),  @event.GetType().Name, true, bytes, null)
+                new EventData(Guid.NewGuid(),  @event.GetType().Name, true, dataBytes, metaBytes)
             });
 
 

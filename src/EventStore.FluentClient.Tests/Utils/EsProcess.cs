@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -62,6 +60,7 @@ namespace EventStore.FluentClient.Tests.Utils
                         return;
 
                 }
+                // ReSharper disable once EmptyGeneralCatchClause
                 catch
                 {
                 }
@@ -111,9 +110,11 @@ namespace EventStore.FluentClient.Tests.Utils
             var assembly = System.Reflection.Assembly.GetExecutingAssembly().CodeBase;
             var basePath = new FileInfo(new Uri(assembly).LocalPath).DirectoryName;
 
+            
+            // ReSharper disable once AssignNullToNotNullAttribute
             string esExecutable = Path.GetFullPath(Path.Combine(basePath, ConfigurationManager.AppSettings[exePath]));
             return esExecutable;
-
+            
         }
     }
 }

@@ -10,7 +10,6 @@ using EventStore.ClientAPI.SystemData;
 using EventStore.FluentClient.Tests.Utils;
 using FluentAssertions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace EventStore.FluentClient.Tests
@@ -79,7 +78,7 @@ namespace EventStore.FluentClient.Tests
 
             slice.Events.Length.Should().Be(1);
 
-            var dataJson = JObject.Parse(Encoding.UTF8.GetString(slice.Events[0].Event.Data))["Data"].ToString();
+            var dataJson = Encoding.UTF8.GetString(slice.Events[0].Event.Data);
             var retrievedEvent = JsonConvert.DeserializeObject<SampleEvent>(dataJson);
 
             retrievedEvent.CreatedOn.Should().Be(originalEvent.CreatedOn);
@@ -95,7 +94,7 @@ namespace EventStore.FluentClient.Tests
             var originalEvent = new SampleEvent();
             using (var eventStream = await EventStream.Create(ConfigurationSettings.FromConfig("Full"), _stream))
             {
-                await eventStream.EmitEventAsync(originalEvent);
+                await eventStream.EmitEventAsync(originalEvent, meta: "123");
             }
 
 
@@ -105,10 +104,8 @@ namespace EventStore.FluentClient.Tests
 
             slice.Events.Length.Should().Be(1);
 
-
-            ((string)JObject.Parse(Encoding.UTF8.GetString(slice.Events[0].Event.Data))["ClrType"]).Should().Be("EventStore.FluentClient.Tests.SampleEvent, EventStore.FluentClient.Tests");
-
-
+            var meta = Encoding.UTF8.GetString(slice.Events[0].Event.Metadata);
+            JsonConvert.DeserializeObject<String>(meta).Should().Be("123");
         }
 
 
@@ -211,15 +208,10 @@ namespace EventStore.FluentClient.Tests
         public async Task GetEventFromEventStore_WhenRetrieveCalled()
         {
 
-            var originalEvent = new EventContainer<SampleEvent>
+            var originalEvent = new SampleEvent
             {
-                ClrType = "EventStore.FluentClient.Tests.SampleEvent, EventStore.FluentClient.Tests",
-                Data = new SampleEvent
-                {
-                    Id = "123",
-                    CreatedOn = DateTime.UtcNow
-                },
-                Meta = null
+                Id = "123",
+                CreatedOn = DateTime.UtcNow
             };
 
             
@@ -238,8 +230,8 @@ namespace EventStore.FluentClient.Tests
             }
 
             retrievedEvents.Should().HaveCount(1);
-            retrievedEvents.First().CreatedOn.Should().Be(originalEvent.Data.CreatedOn);
-            retrievedEvents.First().Id.Should().Be(originalEvent.Data.Id);
+            retrievedEvents.First().CreatedOn.Should().Be(originalEvent.CreatedOn);
+            retrievedEvents.First().Id.Should().Be(originalEvent.Id);
 
         }
 
@@ -334,12 +326,7 @@ namespace EventStore.FluentClient.Tests
         private async Task PopulateStream(IEnumerable<SampleEvent> events, string stream = null)
         {
 
-            var eventData = events.Select(ev => new EventData(Guid.NewGuid(), ev.GetType().Name, true, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new EventContainer<SampleEvent>
-            {
-                ClrType = "EventStore.FluentClient.Tests.SampleEvent, EventStore.FluentClient.Tests",
-                Data = ev,
-                Meta = null
-            })), null));
+            var eventData = events.Select(ev => new EventData(Guid.NewGuid(), ev.GetType().Name, true, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(ev)), null));
             await _eventStoreConnection.ConnectAsync();
             await _eventStoreConnection.AppendToStreamAsync(stream ?? _stream, ExpectedVersion.Any, eventData);
             _eventStoreConnection.Close();
